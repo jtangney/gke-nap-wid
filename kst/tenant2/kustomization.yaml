@@ -1,0 +1,4 @@
+namespace: tenant2-ns
+namePrefix: tenant2-
+bases:
+    - ../base
