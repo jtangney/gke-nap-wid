@@ -1,0 +1,11 @@
+namespace: tenant2-ns
+namePrefix: tenant2-
+bases:
+  - ../../bases/jobs
+
+commonLabels:
+  tenant: tenant2
+
+patchesStrategicMerge:
+  - job-taints.yaml
+  - job-resources.yaml

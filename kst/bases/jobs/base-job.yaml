@@ -1,26 +1,21 @@
-
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: simple-job
+  name: pi-job
 spec:
   parallelism: 1
+  backoffLimit: 0
   template:
-    metadata:
-      name: simple-job
-      labels:
-        app: simple-app
     spec:
-      serviceAccountName: ksa
       containers:
         - name: pi
-          image: eu.gcr.io/jtg-firebase-dev102/generate-pi:latest
+          image: gcr.io/pub-2592-275015/generate-pi:latest
           resources:
             limits:
               cpu: 0.5
-              memory: 2Gi
+              memory: 1Gi
             requests:
               cpu: 0.5
-              memory: 2Gi
+              memory: 1Gi
           imagePullPolicy: IfNotPresent
       restartPolicy: Never

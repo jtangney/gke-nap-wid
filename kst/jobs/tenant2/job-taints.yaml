@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tenant
+                operator: In
+                values:
+                - tenant2
+      tolerations:
+      - key: tenant
+        operator: Equal
+        value: tenant2
+        effect: NoSchedule
