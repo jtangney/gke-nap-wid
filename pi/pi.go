@@ -13,20 +13,32 @@ import (
 )
 
 var (
-	workers  = flag.Int("workers", 500000, "Number of go routines used to calculate pi")
-	calcTime = flag.Duration("calcTime", 10*time.Second, "Calculate pi for this length of time (seconds)")
+	calcTime = flag.Duration("calcTime", 10*time.Second, "Calculate pi for this length of time")
 	bucket   = flag.String("bucket", "", "Write Pi result to this GCS bucket")
 )
 
 func main() {
 	flag.Parse()
-	val := pi2(*calcTime)
-	// val := pi(*workers)
+	val := pi(*calcTime)
 	strval := strconv.FormatFloat(val, 'f', -1, 64)
-	// log.Printf("Calculated Pi with %d goroutines: %s\n", *workers, strval)
 	klog.Infof("Calculated Pi for %v: %s\n", *calcTime, strval)
 	if *bucket != "" {
 		writeToGcs(*bucket, strval)
+	}
+}
+
+// approximate pi using the Leibniz formula for specified duration
+func pi(calcTime time.Duration) float64 {
+	f := 0.0
+	k := 0.0
+	for timeout := time.After(calcTime); ; {
+		select {
+		case <-timeout:
+			return f
+		default:
+			f += 4 * math.Pow(-1, k) / (2*k + 1)
+			k++
+		}
 	}
 }
 
@@ -49,37 +61,4 @@ func writeToGcs(bucketName string, val string) {
 		klog.Exitf("Failed to write GCS file: %v", err)
 	}
 	klog.Infof("Wrote gs://%s/%s", bucketName, filename)
-}
-
-// approximate pi using the Leibniz formula for specified duration
-func pi2(calcTime time.Duration) float64 {
-	f := 0.0
-	k := 0.0
-	for timeout := time.After(calcTime); ; {
-		select {
-		case <-timeout:
-			return f
-		default:
-			f += 4 * math.Pow(-1, k) / (2*k + 1)
-			k++
-		}
-	}
-}
-
-// pi launches n goroutines to compute an
-// approximation of pi.
-func pi(n int) float64 {
-	ch := make(chan float64)
-	for k := 0; k <= n; k++ {
-		go term(ch, float64(k))
-	}
-	f := 0.0
-	for k := 0; k <= n; k++ {
-		f += <-ch
-	}
-	return f
-}
-
-func term(ch chan float64, k float64) {
-	ch <- 4 * math.Pow(-1, k) / (2*k + 1)
 }

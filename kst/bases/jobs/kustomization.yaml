@@ -1,2 +1,2 @@
 resources:
-    - job.yaml
+    - base-job.yaml
