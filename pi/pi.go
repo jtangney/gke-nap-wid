@@ -4,12 +4,12 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"log"
 	"math"
 	"strconv"
 	"time"
 
 	"cloud.google.com/go/storage"
-	"k8s.io/klog"
 )
 
 var (
@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 	val := pi(*calcTime)
 	strval := strconv.FormatFloat(val, 'f', -1, 64)
-	klog.Infof("Calculated Pi for %v: %s\n", *calcTime, strval)
+	log.Printf("Calculated Pi for %v: %s\n", *calcTime, strval)
 	if *bucket != "" {
 		writeToGcs(*bucket, strval)
 	}
@@ -46,19 +46,19 @@ func writeToGcs(bucketName string, val string) {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
-		klog.Exitf("Failed to create GCS client: %v", err)
+		log.Fatalf("Failed to create GCS client: %v", err)
 	}
 
 	bucket := client.Bucket(bucketName)
-	filename := time.Now().UTC().Format(time.RFC3339)
+	filename := "pi-" + time.Now().UTC().Format(time.RFC3339)
 	obj := bucket.Object(filename)
 
 	w := obj.NewWriter(ctx)
 	if _, err := fmt.Fprintf(w, "%s", val); err != nil {
-		klog.Exitf("Failed to write GCS file: %v", err)
+		log.Fatalf("Failed to write GCS file: %v", err)
 	}
 	if err := w.Close(); err != nil {
-		klog.Exitf("Failed to write GCS file: %v", err)
+		log.Fatalf("Failed to write GCS file: %v", err)
 	}
-	klog.Infof("Wrote gs://%s/%s", bucketName, filename)
+	log.Printf("Wrote gs://%s/%s", bucketName, filename)
 }

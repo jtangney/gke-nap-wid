@@ -1,4 +1,8 @@
 namespace: tenant2-ns
 namePrefix: tenant2-
 bases:
-    - ../../bases/setup
+  - ../../bases/setup
+
+commonLabels:
+  tenant: tenant2
+  

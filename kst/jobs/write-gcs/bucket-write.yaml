@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job
+spec:
+  template:
+    spec:
+      serviceAccountName: tenant1-ksa
+      containers:
+        - name: pi
+          args:
+            - --bucket=tenant1-MY_PROJECT
