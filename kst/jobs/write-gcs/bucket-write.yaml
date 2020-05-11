@@ -9,4 +9,4 @@ spec:
       containers:
         - name: pi
           args:
-            - --bucket=tenant1-MY_PROJECT
+            - --bucket=MY_BUCKET
