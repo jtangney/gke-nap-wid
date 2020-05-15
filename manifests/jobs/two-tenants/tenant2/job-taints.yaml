@@ -5,15 +5,8 @@ metadata:
 spec:
   template:
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: tenant
-                operator: In
-                values:
-                - tenant2
+      nodeSelector:
+        tenant: tenant2
       tolerations:
       - key: tenant
         operator: Equal
