@@ -2,7 +2,7 @@ namespace: tenant2-ns
 namePrefix: tenant2-larger-
 
 bases:
-  - ../../../bases/job-resources
+  - ../../larger-job
 
 commonLabels:
   tenant: tenant2

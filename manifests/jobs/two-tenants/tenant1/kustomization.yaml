@@ -1,7 +1,7 @@
 namespace: tenant1-ns
 namePrefix: tenant1-larger-
 bases:
-  - ../../../bases/job-resources
+  - ../../larger-job
 
 commonLabels:
   tenant: tenant1
