@@ -1,11 +1,6 @@
-# namespace: tenant1-ns
 nameSuffix: -gcs
 bases:
   - ../one-tenant
-  # - ../../bases/job
-
-# commonLabels:
-#   tenant: tenant1
 
 patchesStrategicMerge:
   - bucket-write.yaml

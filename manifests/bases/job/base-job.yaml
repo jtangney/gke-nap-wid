@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: pi
-          image: gcr.io/MY_PROJECT/generate-pi:latest
+          image: gcr.io/pub-2592-277309/generate-pi:latest
           resources:
             limits:
               cpu: 0.5

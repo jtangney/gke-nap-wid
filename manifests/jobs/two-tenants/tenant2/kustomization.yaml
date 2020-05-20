@@ -1,5 +1,5 @@
 namespace: tenant2-ns
-namePrefix: tenant2-larger-
+namePrefix: tenant2-
 
 bases:
   - ../../larger-job
@@ -8,4 +8,4 @@ commonLabels:
   tenant: tenant2
 
 patchesStrategicMerge:
-  - job-taints.yaml
+  - job-constraints.yaml
