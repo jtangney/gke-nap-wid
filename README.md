@@ -2,7 +2,4 @@
 This repo demonstrates the use of [node auto-provisioning](https://cloud.google.com/kubernetes-engine/docs/how-to/node-auto-provisioning) to auto-scale a multi-tenant [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine/) cluster. Tenant workloads are kept separate, and [workload identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) is used to control tenant access to GCP resources like Cloud Storage buckets. 
 
 Cluster and Job configuration is managed with Kustomize.
-
-### Disclaimer
-This is not an official Google product.
  
